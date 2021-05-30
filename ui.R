@@ -33,15 +33,8 @@ navbarPage("Edinburgh Bike Hire", id="nav", theme = shinytheme("flatly"),
                                       
                                       h2("Bike stations"),
                                       
-                                      selectInput("color", "Color", vars),
-                                      selectInput("size", "Size", vars, selected = "adultpop"),
-                                      conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
-                                                       # Only prompt for threshold when coloring or sizing by superzip
-                                                       numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)
-                                      ),
-                                      
-                                      plotOutput("histCentile", height = 200),
-                                      plotOutput("scatterCollegeIncome", height = 250)
+                                      plotlyOutput("outward_counts", height = 200),
+                                      plotlyOutput("inward_counts", height = 250)
                         ),
                         
                         tags$div(id="cite",
