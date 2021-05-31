@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 data_record_level/
+.DS_store

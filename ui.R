@@ -1,3 +1,4 @@
+library(shiny)
 library(leaflet)
 library(shinythemes)
 
@@ -33,6 +34,7 @@ navbarPage("Edinburgh Bike Hire", id="nav", theme = shinytheme("flatly"),
                                       
                                       h2("Bike stations"),
                                       
+                                      textOutput("outward_counts_header"),
                                       plotlyOutput("outward_counts", height = 200),
                                       plotlyOutput("inward_counts", height = 250)
                         ),

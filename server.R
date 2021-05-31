@@ -5,6 +5,7 @@ library(lattice)
 library(dplyr)
 library(plotly)
 library(ggplot2)
+library(lubridate)
 
 source('src/get_api_data_edinburgh_cycle_hire.R')
 
@@ -33,9 +34,11 @@ load("data_for_upload/data_for_app.Rdata")
 
 getColor <- function(.station_info) {
     sapply(.station_info$num_bikes_available, function(num_bikes_available) {
-        if (num_bikes_available <= 4) {
-            "red"
-        } else if (num_bikes_available <= 6) {
+        if (num_bikes_available == 0 ) {
+            "lightgray"
+        }else if (num_bikes_available <=2){
+            "red"   
+        }else if (num_bikes_available <= 3) {
             "orange"
         } else {
             "green"
@@ -49,6 +52,9 @@ icons <- awesomeIcons(
     library = 'fa',
     markerColor = getColor(station_info_status)
 )
+
+
+# Popup labels text
 
 
 function(input, output, session) {
@@ -66,8 +72,19 @@ function(input, output, session) {
                 lng = station_info_status$lon ,
                 lat = station_info_status$lat ,
                 layerId = station_info_status$station_id,
-                icon = icons
-            )
+                icon = icons,
+                popup = paste0(
+                    "<b>"
+                    ,station_info_status$name
+                    ,"</b>",
+                    "<br>",
+                    "Available bikes: ", station_info_status$num_bikes_available,
+                    "<br>",
+                    "Parking spaces: ",  station_info_status$num_docks_available
+                )  
+            )    
+                  
+            
     })
     
     observeEvent(input$map_marker_click, {
@@ -89,6 +106,7 @@ function(input, output, session) {
         }
         
     })
+    
     
     output$outward_counts <- renderPlotly({
         outward_trips_plot <-
