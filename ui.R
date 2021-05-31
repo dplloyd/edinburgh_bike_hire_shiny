@@ -1,7 +1,7 @@
 library(shiny)
 library(leaflet)
 library(shinythemes)
-
+library(plotly)
 
 
 # Choices for drop-downs

@@ -75,6 +75,9 @@ theme_panel <-
         legend.position = "none"
     )
 
+# Useful variables ----
+hour_now <- Sys.time() %>%  hour()
+
 # Main server function ----
 function(input, output, session) {
     # MAP ----
