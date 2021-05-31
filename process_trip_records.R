@@ -23,7 +23,8 @@ trip_counts_out <- trips_df %>%
   group_by(start_station_id, day_of_week, hour_trip_started) %>%
   summarise(mean_n_outward_trip = mean(n_outward_trips),
             median_n_outward_trip = median(n_outward_trips),
-            stddev_n_outward_trip = sd(n_outward_trips))
+            stddev_n_outward_trip = sd(n_outward_trips))%>% 
+  ungroup()
 
 
 trip_counts_in <- trips_df %>%
@@ -37,11 +38,18 @@ trip_counts_in <- trips_df %>%
   group_by(end_station_id, day_of_week, hour_trip_ended) %>%
   summarise(mean_n_inward_trip = mean(n_inward_trips),
             median_n_inward_trip = median(n_inward_trips),
-            stddev_n_inward_trip = sd(n_inward_trips))
+            stddev_n_inward_trip = sd(n_inward_trips)) %>% 
+  ungroup()
 
 trip_counts
 
-
+# Record the date ranges for trip counts
+trip_counts_date_ranges <-
+  tibble(
+    trip_direction = c("outward", "inward"),
+    min_date = c(min(trips_df$started_at), min(trips_df$ended_at)),
+    max_date = c(max(trips_df$started_at), max(trips_df$ended_at))
+  )
 
 
 save(trip_counts_in,trip_counts_out,file = "data_for_upload/data_for_app.Rdata")
