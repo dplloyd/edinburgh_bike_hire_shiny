@@ -202,7 +202,7 @@ function(input, output, session) {
     
     output$counts_header <- renderUI({
         HTML(
-            "These plots give an overview of bike hire demand. They summarise, by hour, the median number of outward bound trips, inward bound trips, and capacity for the selected hire station on a <b>",
+            "These plots summarise, by hour, the median number of outward and inward bound trips for the selected hire station on a <b>",
             today() %>% weekdays(),
             "</b>",
             ". <hr>"

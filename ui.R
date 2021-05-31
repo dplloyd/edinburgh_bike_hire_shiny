@@ -43,7 +43,7 @@ navbarPage(
                 width = 500,
                 height = "auto",
                 
-                h2("Bike availability trends"),
+                h2("Bike departure and arrival trends"),
                 
                 htmlOutput("counts_header"),
                 htmlOutput("counts_station_selected_title"),
