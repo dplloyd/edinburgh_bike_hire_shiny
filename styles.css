@@ -1,6 +1,11 @@
+/* Get a fancy font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu:wght@300&display=swap');
+
+
 input[type="number"] {
   max-width: 80%;
 }
+
 
 div.outer {
   position: fixed;
@@ -14,8 +19,8 @@ div.outer {
 
 /* Customize fonts */
   body, label, input, button, select { 
-    font-family: 'Helvetica Neue', Helvetica;
-    font-weight: 200;
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
   }
 h1, h2, h3, h4 { font-weight: 400; }
 

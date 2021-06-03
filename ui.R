@@ -32,6 +32,22 @@ navbarPage(
             leafletOutput("map", width = "100%", height = "100%"),
             # Shiny versions prior to 0.11 should use class = "modal" instead.
             absolutePanel(
+                id = "overall_info",
+                class = "panel panel-default",
+                fixed = TRUE,
+                draggable = TRUE,
+                top = 60,
+                left = "auto",
+                right = 520,
+                bottom = "auto",
+                width = 250,
+                height = "auto",
+                
+             tableOutput("summary_information")
+                
+                
+            ),
+            absolutePanel(
                 id = "controls",
                 class = "panel panel-default",
                 fixed = TRUE,

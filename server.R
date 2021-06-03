@@ -6,6 +6,7 @@ library(dplyr)
 library(plotly)
 library(ggplot2)
 library(lubridate)
+library(DT)
 
 # Function sources all files in named directory
 sourceDir <- function(path, trace = TRUE, ...) {
@@ -77,6 +78,17 @@ theme_panel <-
 
 # Useful variables ----
 hour_now <- Sys.time() %>%  hour()
+
+station_summary <- tribble(
+    ~ `Summary`,
+    ~ `City total`,
+    "Available bikes",
+    sum(station_info_status$num_bikes_available),
+    "Available parking spaces",
+    sum(station_info_status$num_docks_available),
+    "Stations empty",
+    station_info_status %>% filter(num_bikes_available==0) %>% nrow()
+)
 
 # Main server function ----
 function(input, output, session) {
@@ -162,12 +174,12 @@ function(input, output, session) {
             map_data_react_trips_out() %>% filter(day_of_week == (today() %>% weekdays())) %>%
             ggplot(aes(
                 hour_trip_started,
-                median_n_outward_trip,
+                mean_n_outward_trip,
                 fill = ifelse(hour_trip_started == hour_now, "highlighted", "normal")
             )) +
             geom_col() +
             scale_x_continuous(limits = c(0, 24), name = "Hour") +
-            scale_y_continuous(name = "Median leavng trips") +
+            scale_y_continuous(name = "mean leavng trips") +
             scale_fill_manual(name = "hour_trip_started",
                               values = c("#18BC9C", "grey50")) +
             theme_panel
@@ -183,14 +195,14 @@ function(input, output, session) {
             map_data_react_trips_in() %>% filter(day_of_week == (today() %>% weekdays())) %>%
             ggplot(aes(
                 hour_trip_ended,
-                median_n_inward_trip,
+                mean_n_inward_trip,
                 fill = ifelse(hour_trip_ended == hour_now, "highlighted", "normal")
             )) +
             geom_col() +
             scale_x_continuous(limits = c(0, 24), name = "Hour") +
             scale_fill_manual(name = "hour_trip_ended",
                               values = c("#18BC9C", "grey50")) +
-            scale_y_continuous(name = "Median arriving trips") +
+            scale_y_continuous(name = "mean arriving trips") +
             theme_panel
         
         ggplotly(inward_trips_plot) %>% plotly::config(displayModeBar = F)
@@ -198,11 +210,22 @@ function(input, output, session) {
     })
     
     
+    # TABLES ----
+
+    output$summary_information <- renderTable({
+        station_summary 
+        
+        
+    },striped = TRUE)
+    
+        
     # TEXT  ----
+    
+ 
     
     output$counts_header <- renderUI({
         HTML(
-            "These plots summarise, by hour, the median number of outward and inward bound trips for the selected hire station on a <b>",
+            "These plots summarise, by hour, the mean number of outward and inward bound trips for the selected hire station on a <b>",
             today() %>% weekdays(),
             "</b>",
             ". <hr>"
@@ -221,7 +244,7 @@ function(input, output, session) {
             map_data_react_trips_out() %>% filter(
                 day_of_week == (today() %>% weekdays()),
                 hour_trip_started == hour_now
-            ) %>% pull(median_n_outward_trip),
+            ) %>% pull(mean_n_outward_trip) %>% round(1),
             " trips starting here.<br>"
         )
     })
@@ -234,7 +257,7 @@ function(input, output, session) {
             map_data_react_trips_in() %>% filter(
                 day_of_week == (today() %>% weekdays()),
                 hour_trip_ended == hour_now
-            ) %>% pull(median_n_inward_trip),
+            ) %>% pull(mean_n_inward_trip) %>% round(1),
             " trips finishing here.<br>"
         )
     })
