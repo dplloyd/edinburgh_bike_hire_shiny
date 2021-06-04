@@ -75,7 +75,7 @@ navbarPage(
                 id = "cite",
                 'Data available from',
                 tags$a(href = 'https://edinburghcyclehire.com/open-data', 'edinburghcyclehire.com'),
-                '| mapped by Diarmuid Lloyd.'
+                '| code available ', tags$a(href = 'https://github.com/dplloyd/edinburgh_bike_hire_shiny', 'here')
             )
         )
     )
