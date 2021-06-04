@@ -10,3 +10,9 @@ Some functions are based on those found in the [byskkel](https://rdrr.io/cran/by
 The Shiny functions, css and javascript files are based on the [SuperZip example](https://shiny.rstudio.com/gallery/superzip-example.html).
 
 Very much work in progress. Lots of issues!
+
+You can see a version of the app [running here](https://diarmuid.shinyapps.io/edinburgh_bike_hire_app/). 
+
+!("Screen Shot 2021-06-04 at 20.51.06.png")
+
+
