@@ -1,3 +1,8 @@
+# UPDATE NOVEMBER 2021
+
+The Edinburgh bike hire scheme is now defunct, and by default, so is this app.
+
+
 # Summary
 
 Interactive map of Edinburgh bike hire stations. Click the map pins to learn:
